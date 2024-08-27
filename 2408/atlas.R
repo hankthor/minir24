@@ -9,6 +9,15 @@ library(gridExtra);
 TDS_WF <- 670; TDS_HF <- 586; TDS_TITLE <- "PANEL1";
 
 #-----------------------------------------------
+geom_array <- function(...) {
+    args <- list(...);
+    ncol <- args$ncol; if( is.null(ncol) ) ncol <- 2;
+    args$ncol <- NULL;
+    annotation_custom(arrangeGrob(grobs=args, ncol=ncol));
+}
+
+
+#-----------------------------------------------
 printab <- function(gdf = dataset, wd=670, hg=586, tag=TDS_TITLE, show=TRUE) {
     g <- ggplotab(gdf);
     fp <- file.path(Sys.getenv("USERPROFILE"), sprintf(".minir24/%s.png", tag));
