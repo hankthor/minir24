@@ -5,6 +5,8 @@
 library(ggplot2);
 library(gridExtra);
 
+TDS_W60 <- 670; TDS_HF <- 586;
+
 #-----------------------------------------------
 rgal <- function(N=5000, alpha=pi/4, sx=3e-3, sy=1e-3, y0=1.3634088, x0=103.8435614, tag="abc") {
   sina <- sin(alpha); cosa <- cos(alpha); 
