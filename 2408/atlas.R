@@ -9,6 +9,22 @@ library(gridExtra);
 TDS_WF <- 670; TDS_HF <- 586; TDS_TITLE <- "PANEL1";
 
 #-----------------------------------------------
+scale_cy_c1 <- function(div=1e3) { scale_y_continuous(labels=function(x) {  format(x/div, big.mark=",", digits=1, scientific=FALSE) }) }
+
+#-----------------------------------------------
+scale_cy_c1_e3 <- function(div=1e3) { scale_cy_c1(div=1e3) }
+
+#-----------------------------------------------
+scale_cy_c1_e6 <- function(div=1e3) { scale_cy_c1(div=1e6) }
+
+#-----------------------------------------------
+geom_bar_xyf <- function() { geom_bar(aes(x=xx, y=yy, fill=fill), stat="identity", show.legend=TRUE) }
+
+#-----------------------------------------------
+legend_bottom <- bottom_legend <- function() { theme(legend.position="bottom", legend.title = element_blank() )  }
+
+
+#-----------------------------------------------
 geom_array <- function(...) {
     args <- list(...);
     ncol <- args$ncol; if( is.null(ncol) ) ncol <- 2;
