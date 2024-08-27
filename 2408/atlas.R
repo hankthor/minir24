@@ -8,6 +8,16 @@ library(gridExtra);
 TDS_W60 <- 670; TDS_HF <- 586;
 
 #-----------------------------------------------
+printab <- function(gdf = dataset, wd=670, hg=586, tag=TDS_TITLE, show=TRUE) {
+    g <- ggplotab(gdf);
+    fp <- file.path(Sys.getenv("USERPROFILE"), sprintf(".minir24/%s.png", tag));
+    dir.create(dirname(fp), showWarnings=FALSE, recursive=TRUE);
+    png(width=wd, height=hg, file=fp); print(g); muted <- dev.off();
+    if(show) print(g);
+}
+
+
+#-----------------------------------------------
 ggplotab <- function(gdf, top=7, lab=TDS_TITLE) {
     gdf <- head(gdf, top);
     g <- ggplot() + ggtitle(lab) + annotation_custom(tableGrob(gdf));
