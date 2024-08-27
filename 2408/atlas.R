@@ -5,11 +5,20 @@
 library(ggplot2);
 library(gridExtra);
 
-TDS_W60 <- 670; TDS_HF <- 586;
+#-----------------------------------------------
+TDS_WF <- 670; TDS_HF <- 586; TDS_TITLE <- "PANEL1";
 
 #-----------------------------------------------
 printab <- function(gdf = dataset, wd=670, hg=586, tag=TDS_TITLE, show=TRUE) {
     g <- ggplotab(gdf);
+    fp <- file.path(Sys.getenv("USERPROFILE"), sprintf(".minir24/%s.png", tag));
+    dir.create(dirname(fp), showWarnings=FALSE, recursive=TRUE);
+    png(width=wd, height=hg, file=fp); print(g); muted <- dev.off();
+    if(show) print(g);
+}
+
+#-----------------------------------------------
+ggdual <- function(g, wd=670, hg=586, tag=TDS_TITLE, show=TRUE) {
     fp <- file.path(Sys.getenv("USERPROFILE"), sprintf(".minir24/%s.png", tag));
     dir.create(dirname(fp), showWarnings=FALSE, recursive=TRUE);
     png(width=wd, height=hg, file=fp); print(g); muted <- dev.off();
