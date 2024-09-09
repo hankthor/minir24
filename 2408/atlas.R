@@ -9,6 +9,9 @@ library(gridExtra);
 TDS_WF <- 670; TDS_HF <- 586; TDS_TITLE <- "PANEL1";
 
 #-----------------------------------------------
+head11 <- function(gdf=dataset, top=11) { grid.table(head(gdf, top)); } 
+
+#-----------------------------------------------
 scale_cy_c1 <- function(div=1e3) { scale_y_continuous(labels=function(x) {  format(x/div, big.mark=",", digits=1, scientific=FALSE) }) }
 
 #-----------------------------------------------
