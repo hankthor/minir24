@@ -8,6 +8,8 @@ library(gridExtra);
 #-----------------------------------------------
 TDS_WF <- 670; TDS_HF <- 586; TDS_TITLE <- "PANEL1";
 
+print0 <- function(x="abc", gdf=dataset, top=11) { print(g <- ggplot() + ggtitle(x)); grid.table(head(gdf, top)); }
+
 #-----------------------------------------------
 head11 <- function(gdf=dataset, top=11) { grid.table(head(gdf, top)); } 
 
