@@ -4,11 +4,49 @@
 #-----------------------------------------------
 library(ggplot2);
 library(gridExtra);
+library(base64enc); 
+library(dplyr); 
+library(png); 
 
 #-----------------------------------------------
 TDS_WF <- 670; TDS_HF <- 586; TDS_TITLE <- "PANEL1";
 
+#-----------------------------------------------
 print0 <- function(x="abc", gdf=dataset, top=11) { print(g <- ggplot() + ggtitle(x)); grid.table(head(gdf, top)); }
+
+#-----------------------------------------------
+read_grob <- function(path, width = unit(1, "npc"), height = unit(1, "npc"), rel=TRUE) {
+    if(rel) path <- file.path(Sys.getenv("USERPROFILE"), ".minir24/Flags", sprintf("%s.PNG", path) );
+    rasterGrob(readPNG(path)); 
+}
+
+#-----------------------------------------------
+read_base64 <- function(path, width = unit(1, "npc"), height = unit(1, "npc"), rel=TRUE) {
+    if(rel) path <- file.path(Sys.getenv("USERPROFILE"), ".minir24/Flags", sprintf("%s.PNG", path) );
+    base64encode(path); 
+}
+
+#-----------------------------------------------
+ggwater <- function(gdf, title = CHART_TITLE, tag = CHART_TAG, ncol = GRID_COL, edit = NULL,
+    bar_width = 0.45, pvm_levels = c("major", "price", "vol", "mix"), dual=TRUE) {
+    gdf$x1 <- as.integer(factor(gdf$FY)) - bar_width;
+    gdf$x2 <- gdf$x1 + 2*bar_width;
+    gdf$fill <- factor(gdf$fill, levels = pvm_levels);
+    gdf <- gdf %>% arrange(tile, FY, fill);
+
+    st <- 0;
+
+    for (i in 1:nrow(gdf)) {
+        if (is.na(gdf[i, "fill"])) { next; }
+        if (gdf[i, "fill"] == "major") {  gdf[i, "y1"] <- 0; gdf[i, "y2"] <- st <- gdf$amt[i]; } 
+        else { gdf[i, "y1"] <- st; gdf[i, "y2"] <- st <- st + gdf$amt[i]; }
+    }
+
+    g <- ggplot(gdf) + facet_wrap(~ tile, scales = "free", ncol = ncol) + geom_text(aes(x=FY, y=0, label= ""), show.legend=FALSE);
+    g <- g + geom_rect(aes(ymin=y1, ymax=y2, xmin=x1, xmax=x2, fill = fill), show.legend=FALSE);
+    if( !is.null(edit) ) g <- edit(g);
+    if(dual) { ggdual(g, tag = tag); } else { print(g); }
+} 
 
 #-----------------------------------------------
 head11 <- function(gdf=dataset, top=11) { grid.table(head(gdf, top)); } 
