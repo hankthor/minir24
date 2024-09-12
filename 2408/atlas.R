@@ -7,6 +7,7 @@ library(gridExtra);
 library(base64enc); 
 library(dplyr); 
 library(png); 
+library(grid); 
 
 #-----------------------------------------------
 TDS_WF <- 670; TDS_HF <- 586; TDS_TITLE <- "PANEL1";
