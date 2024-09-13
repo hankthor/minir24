@@ -13,6 +13,25 @@ library(grid);
 TDS_WF <- 670; TDS_HF <- 586; TDS_TITLE <- "PANEL1";
 
 #-----------------------------------------------
+facet_tile <- function(free="free", ncol=2) { 
+    facet_wrap(scales = free, ncol = ncol, tile ~ .); 
+} 
+
+#-----------------------------------------------
+no_axis_titles <- function() { 
+    theme(axis.title.x = element_blank(), axis.title.y = element_blank() ); 
+}
+
+#-----------------------------------------------
+levels_az <- function(gdf, tile="tile", tile_az="tile_az") { 
+    tdf <- data.frame(tile=gdf[[tile]], tile_az=gdf[[tile_az]]);
+    tdf <- unique(tdf); 
+    tdf <- tdf[order(tdf$tile_az), ]; 
+    return(tdf$tile);
+}
+
+
+#-----------------------------------------------
 print0 <- function(x="abc", gdf=dataset, top=11) { print(g <- ggplot() + ggtitle(x)); grid.table(head(gdf, top)); }
 
 #-----------------------------------------------
