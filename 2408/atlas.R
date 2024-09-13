@@ -13,6 +13,22 @@ library(grid);
 TDS_WF <- 670; TDS_HF <- 586; TDS_TITLE <- "PANEL1";
 
 #-----------------------------------------------
+lapply_tile_ncol <- function(gdf, FUN, ncol=2) { 
+    grobs <- lapply(split(gdf, gdf$tile), FUN=FUN);
+    if( is.null(ncol) ) return(grobs);
+    return( ggplot() + annotation_custom(arrangeGrob(grobs=grobs, ncol=ncol)) );
+}
+
+#-----------------------------------------------
+rename_xbl_t2 <- function(gdf=dataset, sort_tile=TRUE) {
+    tdf <- data.frame(xx=gdf[[1]], yy_bar=gdf[[2]], yy_line=gdf[[3]]);
+    tdf$tile <- gdf[[4]]; 
+    tdf$tile_az <- gdf[[5]];
+    if( sort_tile ) tdf$tile <- factor_tile(tdf);
+    return(tdf);    
+}
+
+#-----------------------------------------------
 factor_tile <- function(gdf, tile="tile", tile_az = "tile_az") { factor(gdf[[tile]], levels = levels_az(gdf, tile=tile, tile_az=tile_az) ); }
 
 #-----------------------------------------------
