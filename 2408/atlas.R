@@ -13,6 +13,14 @@ library(grid);
 TDS_WF <- 670; TDS_HF <- 586; TDS_TITLE <- "PANEL1";
 
 #-----------------------------------------------
+printf <- function(g=dataset, ncol=2, top=11) { 
+    if( is.ggplot(g) ) { print(g); return(cat()) }
+    if( is.data.frame(g) ) { print(ggplot()); grid.table(head(g, top)); return(cat()) }
+    grid.arrange(grobs=g, ncol=ncol); 
+}
+
+
+#-----------------------------------------------
 lapply_tile_ncol <- function(gdf, FUN, ncol=2) { 
     grobs <- lapply(split(gdf, gdf$tile), FUN=FUN);
     if( is.null(ncol) ) return(grobs);
