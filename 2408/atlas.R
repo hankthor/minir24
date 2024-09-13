@@ -13,6 +13,22 @@ library(grid);
 TDS_WF <- 670; TDS_HF <- 586; TDS_TITLE <- "PANEL1";
 
 #-----------------------------------------------
+factor_tile <- function(gdf, tile="tile", tile_az = "tile_az") { factor(gdf[[tile]], levels = levels_az(gdf, tile=tile, tile_az=tile_az) ); }
+
+#-----------------------------------------------
+factor_fill <- function(gdf, tile="fill", tile_az = "fill_az") { factor(gdf[[fill]], levels = levels_az(gdf, tile=fill, tile_az=fill_az) ); }
+
+#-----------------------------------------------
+lapply_tile <- function(gdf, FUN) { lapply(split(gdf, gdf$tile), FUN=FUN)}
+
+#-----------------------------------------------
+affine_scale <- function(x, y) {
+    y1 <- min(y); y2 <- max(y); x1 <- min(x); x2 <- max(x);
+    return( y1 + (x - x1)*(y2 - y1)/(x2 - x1) );
+}
+
+
+#-----------------------------------------------
 facet_tile <- function(free="free", ncol=2) { 
     facet_wrap(scales = free, ncol = ncol, tile ~ .); 
 } 
