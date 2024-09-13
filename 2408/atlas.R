@@ -16,7 +16,39 @@ TDS_WF <- 670; TDS_HF <- 586; TDS_TITLE <- "PANEL1";
 rename_void <- function(gdf=dataset) { return(gdf); }
 
 #-----------------------------------------------
-ggplot_top <- function(gdf, top=11) { gdf <- tableGrob(head(gdf, top)); ggplot() + annotation_custom(gdf); }
+ggplot_top <- function(gdf, top=11) { 
+    gdf <- tableGrob(head(gdf, top)); ggplot() + annotation_custom(gdf); 
+}
+
+#-----------------------------------------------
+rename_pApB <- function(gdf=dataset, tile="store fmt", tile_az="store fmt az") {
+    gdf$tile <- factor_tile(gdf, tile=tile, tile_az=tile_az);
+    
+    cols <- names(gdf); st <- "bar"; tdf <- NULL;
+    for(k in seq_along(cols)) {
+        nk <- cols[k];
+        if( nk %in% c("FY", "tile") ) { next; }
+        if(nk == "__%%A") { st <- "line"; next; }
+        if(nk == "__%%B") { st <- "other"; break; }
+        tk <- data.frame(xx=gdf$FY, tile=gdf$tile, yy=gdf[[nk]], name=nk, type=st);
+        tdf <- rbind(tdf, tk);
+    }
+
+#    tdf$tile <- "void";
+    return(tdf);
+}
+
+#-----------------------------------------------
+scale_cy_c1_e3 <- function(div=1e3) { 
+	fmt <- function(x) { format(round(x/div, 1), nsmall=1, scientific = FALSE, big.mark=",") }
+	scale_y_continuous(labels=fmt);  
+}
+
+#-----------------------------------------------
+scale_cy_c1 <- function(div=1) { 
+	fmt <- function(x) { format(round(x/div, 1), nsmall=1, scientific = FALSE, big.mark=",") }
+	scale_y_continuous(labels=fmt);  
+}
 
 
 #-----------------------------------------------
