@@ -13,6 +13,13 @@ library(grid);
 TDS_WF <- 670; TDS_HF <- 586; TDS_TITLE <- "PANEL1";
 
 #-----------------------------------------------
+rename_void <- function(gdf=dataset) { return(gdf); }
+
+#-----------------------------------------------
+ggplot_top <- function(gdf, top=11) { gdf <- tableGrob(head(gdf, top)); ggplot() + annotation_custom(gdf); }
+
+
+#-----------------------------------------------
 printf <- function(g=dataset, ncol=2, top=11) { 
     if( is.ggplot(g) ) { print(g); return(cat()) }
     if( is.data.frame(g) ) { print(ggplot()); grid.table(head(g, top)); return(cat()) }
