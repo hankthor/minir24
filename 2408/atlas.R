@@ -2,15 +2,18 @@
 # See the CPR establishing test
 
 #-----------------------------------------------
-library(ggplot2);
-library(gridExtra);
-library(base64enc); 
-library(dplyr); 
-library(png); 
-library(grid); 
+TDS_WF <- 670; TDS_HF <- 586; TDS_TITLE <- "PANEL1";
+library(ggplot2); library(gridExtra); library(base64enc); 
+library(dplyr); library(png); library(grid); 
 
 #-----------------------------------------------
-TDS_WF <- 670; TDS_HF <- 586; TDS_TITLE <- "PANEL1";
+export_frame <- function(gdf, fp, mode="csv") {
+    fp <- file.path(Sys.getenv("USERPROFILE"), ".minir24/tables", fp);
+    dir.create(dirname(fp), showWarnings=FALSE, recursive=TRUE);    
+    if(mode=="csv") write.csv(gdf, file=fp, row.names=FALSE);
+    if(mode=="dput") dput(gdf, file=fp);
+}
+
 
 #-----------------------------------------------
 fmt_c1 <- function(x, div=1) { format(round(x/div, 1), nsmall=1, scientific = FALSE, big.mark=",") }
