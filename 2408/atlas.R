@@ -13,6 +13,44 @@ library(grid);
 TDS_WF <- 670; TDS_HF <- 586; TDS_TITLE <- "PANEL1";
 
 #-----------------------------------------------
+fmt_c1 <- function(x, div=1) { format(round(x/div, 1), nsmall=1, scientific = FALSE, big.mark=",") }
+fmt_c1_e3 <- function(x, div=1e3) { format(round(x/div, 1), nsmall=1, scientific = FALSE, big.mark=",") }
+fmt_c1_e6 <- function(x, div=1e6) { format(round(x/div, 1), nsmall=1, scientific = FALSE, big.mark=",") }
+fmt_c1_e9 <- function(x, div=1e9) { format(round(x/div, 1), nsmall=1, scientific = FALSE, big.mark=",") }
+
+#-----------------------------------------------
+replace <- function(x, lt, nt) { 
+	gsub(lt, nt, x, fixed=TRUE); 
+}
+
+#-----------------------------------------------
+labels_xx <- function(gdf, xx_long="xx_long", xx_short="xx_short") {
+    tdf <- unique(data.frame(xx_long=gdf[[xx_long]], xx_short=gdf[[xx_short]])); 
+    tdf <- sapply(split(tdf, tdf$xx_long), FUN=function(ddd) { ddd$xx_short });
+    return(tdf);
+}
+
+#-----------------------------------------------
+rename_pivot_dual <- function(gdf=dataset) {
+    cols <- names(gdf); tdf <- NULL; st <- "";
+    for(k in seq_along(cols)) {
+        nk <- cols[k];
+        if(nk == "__%%A") { st <- "val"; next; }
+        if(st == "val") { 
+            tk <- data.frame(xx=gdf[[1]], yy=gdf[[2]]); 
+            tk$fill <- nk; tk$amt <- gdf[[nk]]; 
+            tdf <- rbind(tdf, tk); 
+        }
+    }
+
+    tdf$xx_long <- paste(replace(tdf$fill, "__", ""), tdf$xx);
+    tdf$xx_short <- ifelse(tdf$xx=="FY21", tdf$xx_long, tdf$xx);
+
+    return(tdf);
+}
+
+
+#-----------------------------------------------
 rename_void <- function(gdf=dataset) { return(gdf); }
 
 #-----------------------------------------------
