@@ -131,8 +131,8 @@ read_base64 <- function(path, width = unit(1, "npc"), height = unit(1, "npc"), r
 }
 
 #-----------------------------------------------
-ggwater <- function(gdf, title = CHART_TITLE, tag = CHART_TAG, ncol = GRID_COL, edit = NULL,
-    bar_width = 0.45, pvm_levels = c("major", "price", "vol", "mix"), dual=TRUE) {
+ggwater <- function(gdf, title = CHART_TITLE, tag = CHART_TAG, ncol = GRID_COL,
+    bar_width = 0.45, pvm_levels = c("major", "price", "vol", "mix"), mode="dual") {
     gdf$x1 <- as.integer(factor(gdf$FY)) - bar_width;
     gdf$x2 <- gdf$x1 + 2*bar_width;
     gdf$fill <- factor(gdf$fill, levels = pvm_levels);
@@ -148,8 +148,10 @@ ggwater <- function(gdf, title = CHART_TITLE, tag = CHART_TAG, ncol = GRID_COL, 
 
     g <- ggplot(gdf) + facet_wrap(~ tile, scales = "free", ncol = ncol) + geom_text(aes(x=FY, y=0, label= ""), show.legend=FALSE);
     g <- g + geom_rect(aes(ymin=y1, ymax=y2, xmin=x1, xmax=x2, fill = fill), show.legend=FALSE);
-    if( !is.null(edit) ) g <- edit(g);
-    if(dual) { ggdual(g, tag = tag); } else { print(g); }
+	
+    if(mode=="dual") { ggdual(g, tag = tag); return(cat()); }
+    if(mode=="print") { print(g); return(cat()); }
+    return(g);
 } 
 
 #-----------------------------------------------
