@@ -8,7 +8,10 @@ library(dplyr); library(png); library(grid);
 
 #-----------------------------------------------
 print_v <- function(g) { if( is.function(g) ) { g <- g(); }; g <- g + theme_void() + no_axis_titles(); print(g); }
-    
+
+#-----------------------------------------------
+geom_bar_xf1 <- function(leg=TRUE) { geom_bar(aes(x=FY, y=1, fill=fill), stat="identity", show.legend=leg) }
+
 #-----------------------------------------------
 geom_top <- function(gdf, top=7) { gdf <- tableGrob(head(gdf, top)); annotation_custom(gdf); }
 
