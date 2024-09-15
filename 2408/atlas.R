@@ -12,6 +12,16 @@ print_v <- function(g) { if( is.function(g) ) { g <- g(); }; g <- g + theme_void
 #-----------------------------------------------
 geom_top <- function(gdf, top=7) { gdf <- tableGrob(head(gdf, top)); annotation_custom(gdf); }
 
+#-----------------------------------------------
+ggmatrix <- function(gdf, mode="g", show_marker=FALSE, marker_size=5, text_angle=25) {
+    g <- ggplot(gdf) + no_axis_titles();
+    if(show_marker) g <- g + geom_point(aes(x=xx_grad, y=yy_grad, color=fill_grad), size=marker_size, show.legend=FALSE);
+    g <- g + geom_text(aes(x=xx_grad, y=yy_grad, label=fmt_c1(amt_grad), color=fill_grad), angle=text_angle, show.legend=FALSE);
+    g <- g + scale_x_discrete(position = "top");
+    if(mode == "g") { return(g); }
+    if(mode == "p" | mode == "print") { print(g); return(cat()); }
+}
+
 
 #-----------------------------------------------
 rename_dyadic_AB <- function(gdf=dataset) {
