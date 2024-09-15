@@ -7,6 +7,12 @@ library(ggplot2); library(gridExtra); library(base64enc);
 library(dplyr); library(png); library(grid); 
 
 #-----------------------------------------------
+print_v <- function(g) { if( is.function(g) ) { g <- g(); }; g <- g + theme_void() + no_axis_titles(); print(g); }
+    
+#-----------------------------------------------
+geom_top <- function(gdf, top=7) { gdf <- tableGrob(head(gdf, top)); annotation_custom(gdf); }
+
+#-----------------------------------------------
 export_frame <- function(gdf, fp, mode="csv") {
     fp <- file.path(Sys.getenv("USERPROFILE"), ".minir24/tables", fp);
     dir.create(dirname(fp), showWarnings=FALSE, recursive=TRUE);    
