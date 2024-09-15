@@ -28,7 +28,6 @@ rename_dyadic_AB <- function(gdf=dataset) {
         tdf <- rbind(tdf, tdk);        
     }
 
-    tdf$tile <- factor_tile(tdf, tile="store fmt", tile_az="store fmt az");
     return(tdf);
 }
 
