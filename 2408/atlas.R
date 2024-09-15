@@ -12,6 +12,27 @@ print_v <- function(g) { if( is.function(g) ) { g <- g(); }; g <- g + theme_void
 #-----------------------------------------------
 geom_top <- function(gdf, top=7) { gdf <- tableGrob(head(gdf, top)); annotation_custom(gdf); }
 
+
+#-----------------------------------------------
+rename_dyadic_AB <- function(gdf=dataset) {
+    cols <- names(gdf); pA <- which(cols=="__%%A"); pB <- which(cols=="__%%B");
+    tdk <- gdf[, 1:(pA-1)];
+
+    tdf <- NULL;
+    for(k in seq_along(cols)) {
+        nk <- cols[[k]]; 
+        tk <- ifelse(k <= pA | k == pB, "xx", ifelse(k>pB, "line", "bar") );
+        if(tk == "xx") { next; } 
+        tdk$col_name <- nk; tdk$col_num <- k; 
+        tdk$col_type <- tk; tdk$col_amt <- gdf[[nk]]; 
+        tdf <- rbind(tdf, tdk);        
+    }
+
+    tdf$tile <- factor_tile(tdf, tile="store fmt", tile_az="store fmt az");
+    return(tdf);
+}
+
+
 #-----------------------------------------------
 export_frame <- function(gdf, fp, mode="csv") {
     fp <- file.path(Sys.getenv("USERPROFILE"), ".minir24/tables", fp);
