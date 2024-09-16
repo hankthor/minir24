@@ -78,6 +78,7 @@ export_frame <- function(gdf, fp, mode="csv") {
     dir.create(dirname(fp), showWarnings=FALSE, recursive=TRUE);    
     if(mode=="csv") write.csv(gdf, file=fp, row.names=FALSE);
     if(mode=="dput") dput(gdf, file=fp);
+    return(fp);	
 }
 
 
