@@ -220,10 +220,10 @@ printf <- function(g=dataset, ncol=2, top=11) {
 
 
 #-----------------------------------------------
-lapply_tile_ncol <- function(gdf, FUN, ncol=2, mode="g") { 
+lapply_tile_ncol <- function(gdf, FUN, ncol=2, outer=NULL, mode="g") { 
     if(! ("tile" %in% names(gdf)) ) gdf$tile <- "all";  
     grobs <- lapply(split(gdf, gdf$tile), FUN=FUN);
-    if(mode=="g") return( ggplot() + annotation_custom(arrangeGrob(grobs=grobs, ncol=ncol)) );
+    if(mode=="g") { if( is.null(outer) ) outer <- ggplot() + theme_void(); return( outer + annotation_custom(arrangeGrob(grobs=grobs, ncol=ncol)) ); }
     if(mode=="grobs" | mode=="gg") return(grobs);
     return(cat());
 }
