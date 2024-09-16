@@ -7,6 +7,16 @@ library(ggplot2); library(gridExtra); library(base64enc);
 library(dplyr); library(png); library(grid); 
 
 #-----------------------------------------------
+export_picture <- function(g, fp, wd=670, hg=586, show=TRUE) {
+    fp <- file.path(Sys.getenv("USERPROFILE"), ".minir24", fp);
+    dir.create(dirname(fp), showWarnings=FALSE, recursive=TRUE);
+    png(width=wd, height=hg, file=fp); print(g); muted <- dev.off();
+    if(show) print(g);
+    return(fp);
+}
+
+
+#-----------------------------------------------
 print_v <- function(g) { if( is.function(g) ) { g <- g(); }; g <- g + theme_void() + no_axis_titles(); print(g); }
 
 #-----------------------------------------------
