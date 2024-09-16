@@ -3,8 +3,12 @@
 
 #-----------------------------------------------
 TDS_WF <- 670; TDS_HF <- 586; TDS_TITLE <- "PANEL1";
+CHART_TITLE <- ""; CHART_TAG <- ""; GRID_COL <- 1;
 library(ggplot2); library(gridExtra); library(base64enc); 
 library(dplyr); library(png); library(grid); 
+
+#-----------------------------------------------
+pvm_colors <- c("major" = "#FFE600", "price" = "#7F7F7F", "vol" = "#7030A0", "mix" = "#00A3AE");
 
 #-----------------------------------------------
 export_picture <- function(g, fp, wd=670, hg=586, show=TRUE) {
