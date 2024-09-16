@@ -74,7 +74,7 @@ rename_dyadic_AB <- function(gdf=dataset) {
 
 #-----------------------------------------------
 export_frame <- function(gdf, fp, mode="csv") {
-    fp <- file.path(Sys.getenv("USERPROFILE"), ".minir24/tables", fp);
+    fp <- file.path(Sys.getenv("USERPROFILE"), ".minir24", fp);
     dir.create(dirname(fp), showWarnings=FALSE, recursive=TRUE);    
     if(mode=="csv") write.csv(gdf, file=fp, row.names=FALSE);
     if(mode=="dput") dput(gdf, file=fp);
