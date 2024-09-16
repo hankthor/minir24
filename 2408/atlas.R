@@ -13,6 +13,27 @@ print_v <- function(g) { if( is.function(g) ) { g <- g(); }; g <- g + theme_void
 geom_bar_xf1 <- function(leg=TRUE) { geom_bar(aes(x=FY, y=1, fill=fill), stat="identity", show.legend=leg) }
 
 #-----------------------------------------------
+flip_first <- function(gdf=dataset) {
+    tdf <- data.frame();
+    cols <- names(gdf); rows <- gdf[[1]];
+
+    for(k in 1:nrow(gdf)) for(j in 2:ncol(gdf)) {
+        rk <- rows[k]; cj <- cols[j];
+        tdf[cj, rk] <- gdf[k, j];
+    }
+
+    return(tdf);
+}
+
+#-----------------------------------------------
+print_dual <- function(gdf, fp="table1.csv") {
+    fp <- export_frame(gdf, fp=fp);
+    fp <- normalizePath(fp, winslash="/");
+    print(ggplot() + geom_top(gdf, top=11) + ggtitle(fp) );
+}
+
+
+#-----------------------------------------------
 geom_top <- function(gdf, top=7) { gdf <- tableGrob(head(gdf, top)); annotation_custom(gdf); }
 
 #-----------------------------------------------
