@@ -19,6 +19,23 @@ export_picture <- function(g, fp, wd=670, hg=586, show=TRUE) {
     return(fp);
 }
 
+#-----------------------------------------------
+pivot_xy_amt <- function(gdf) {
+    tdf <- data.frame();
+    gdf$xx_grad <- as.character(gdf$xx_grad);
+    gdf$yy_grad <- as.character(gdf$yy_grad);
+
+    for(k in 1:nrow(gdf)) {
+        rk <- gdf[k, "yy_grad"];
+        ck <- gdf[k, "xx_grad"];
+        vk <- gdf[k, "amt_grad"];
+        tdf[rk, ck] <- vk;
+    }
+
+    tdf <- cbind(data.frame(group=row.names(tdf)), tdf);
+    return(tdf);
+}
+
 
 #-----------------------------------------------
 print_v <- function(g) { if( is.function(g) ) { g <- g(); }; g <- g + theme_void() + no_axis_titles(); print(g); }
