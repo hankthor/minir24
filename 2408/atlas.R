@@ -19,7 +19,7 @@ geom_top <- function(gdf, top=7) { gdf <- tableGrob(head(gdf, top)); annotation_
 ggbox <- function(gdf, mode="g", show_marker=FALSE, marker_size=5, text_angle=25, label=FALSE) {
     g <- ggplot(gdf) + no_axis_titles() + scale_x_discrete(position="top") + legend_bottom();
     g <- g + geom_bar(aes(x=xx_grad, y=1, fill=fill_grad), color='white', stat="identity");
-    if(label) { g <- g  + geom_text(aes(x=xx_grad, y=1, label=fmt_c1(amt_grad), fill=fill_grad), position=position_stack(vjust=0.5), color='white', stat="identity"); }
+    if(!label) { g <- g  + geom_text(aes(x=xx_grad, y=1, label=fmt_c1(amt_grad), fill=fill_grad), position=position_stack(vjust=0.5), color='white', stat="identity"); }
     else { g <- g  + geom_text(aes(x=xx_grad, y=1, label=label_grad, fill=fill_grad), position=position_stack(vjust=0.5), color='white', stat="identity"); }
     g <- g + theme( axis.text.y = element_blank(), axis.ticks.y = element_blank() );
     if(mode == "g") { return(g); }
