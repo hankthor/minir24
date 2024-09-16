@@ -16,6 +16,22 @@ geom_bar_xf1 <- function(leg=TRUE) { geom_bar(aes(x=FY, y=1, fill=fill), stat="i
 geom_top <- function(gdf, top=7) { gdf <- tableGrob(head(gdf, top)); annotation_custom(gdf); }
 
 #-----------------------------------------------
+ggplot_dual_xy_seg <- function(gdf, bar_fill="yellow", line_col="black", mode="g") {
+    gdf$yy_line <- affine_scale(gdf$yy_line, gdf$yy_bar);
+
+    g <- ggplot(gdf) + facet_tile() + no_axis_titles();
+    g <- g + geom_bar(aes(x=xx, y=yy_bar), fill=bar_fill, stat="identity", show.legend=FALSE);
+    g <- g + geom_line(aes(x=xx, y=yy_line, group=seg), color=line_col, show.legend=FALSE);
+    g <- g + geom_point(aes(x=xx, y=yy_line, group=seg), color=line_col, size=1.5, show.legend=FALSE);
+    g <- g + scale_cy_c1_e3();
+
+    if(mode == "g") { return(g); }
+    if(mode == "p" | mode == "print") { print(g); return(cat()); }
+
+    return(g);
+}
+
+#-----------------------------------------------
 ggbox <- function(gdf, mode="g", show_marker=FALSE, marker_size=5, text_angle=25, label=FALSE) {
     g <- ggplot(gdf) + no_axis_titles() + scale_x_discrete(position="top") + legend_bottom();
     g <- g + geom_bar(aes(x=xx_grad, y=1, fill=fill_grad), color='white', stat="identity");
