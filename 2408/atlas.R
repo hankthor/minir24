@@ -2,6 +2,29 @@
 # See the CPR establishing test
 
 #-----------------------------------------------
+ggtitle_wale <- function(gdf, hi="wh", low="wl") {
+    wtt <- sum(gdf[[hi]])/sum(gdf[[low]]);
+    wtt <- paste("WALE:", fmt_c1(wtt) );
+    return( ggtitle(wtt) );
+}
+
+#-----------------------------------------------
+ggplot_gantt <- function(gdf) {
+    gdf_vert <- data.frame(wale=max(gdf$wale), ymin=min(gdf$code), ymax=max(gdf$code));
+    gdf_wale <- gdf[gdf$end>gdf$wale, ];
+
+    g <- ggplot(gdf) + no_axis_titles() + theme( axis.text.x = element_blank(), axis.ticks.x = element_blank() );
+    g <- g + geom_text(aes(x=start, y=code, label='', fill=code), show.legend=FALSE);
+    g <- g + geom_text(aes(x=end, y=code, label='', fill=code), show.legend=FALSE);
+
+    g <- g + geom_segment(aes(x=start, y=code, xend=end, yend=code, color=code), size=3.5, show.legend=FALSE);
+    g <- g + geom_segment(data=gdf_wale, aes(x=wale, y=code, xend=end, yend=code), size=1.5, show.legend=FALSE);
+
+    g <- g + geom_segment(data=gdf_vert, aes(x=wale, xend=wale, y=ymin, yend=ymax), linetype="dashed", color="blue", line=1.5, show.legend=FALSE);
+    return(g);
+}
+
+#-----------------------------------------------
 TDS_WF <- 670; TDS_HF <- 586; TDS_TITLE <- "PANEL1";
 CHART_TITLE <- ""; CHART_TAG <- ""; GRID_COL <- 1;
 library(ggplot2); library(gridExtra); library(base64enc); 
