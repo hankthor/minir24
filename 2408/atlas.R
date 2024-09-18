@@ -2,11 +2,18 @@
 # See the CPR establishing test
 
 #-----------------------------------------------
+geom_png_path <- function(path) {
+    gk <- rasterGrob(readPNG(path)); 
+    annotation_custom(gk);
+}
+
+#-----------------------------------------------
 ggtitle_wale <- function(gdf, hi="wh", low="wl") {
     wtt <- sum(gdf[[hi]])/sum(gdf[[low]]);
     wtt <- paste("WALE:", fmt_c1(wtt) );
     return( ggtitle(wtt) );
 }
+
 
 #-----------------------------------------------
 ggplot_gantt <- function(gdf) {
