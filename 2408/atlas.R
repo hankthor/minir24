@@ -8,6 +8,13 @@ geom_png_path <- function(path) {
 }
 
 #-----------------------------------------------
+geom_png_base64 <- function(str) {
+    gk <- readPNG( base64decode( max(str) ) );
+    annotation_custom( rasterGrob(gk) );
+}
+
+
+#-----------------------------------------------
 ggtitle_wale <- function(gdf, hi="wh", low="wl") {
     wtt <- sum(gdf[[hi]])/sum(gdf[[low]]);
     wtt <- paste("WALE:", fmt_c1(wtt) );
