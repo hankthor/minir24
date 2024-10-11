@@ -1,3 +1,6 @@
+library(ggplot2);
+library(gridExtra);
+
 
 #------------------------------------------------
 rdupl <- function(rows, gdf, sel, cdf=FALSE, inv=0) {
@@ -23,6 +26,26 @@ rlookup <- function(r, v, cdf=FALSE, inv=0) {
       for(k in seq_along(v) ) { s <- s + v[k]; if(r <= s) return(k); } 
       return(inv);
    }
+}
+
+#------------------------------------------------
+splitl <- function(x, split="\\n") { 
+    unlist(strsplit(x, split=split)) 
+}
+
+#------------------------------------------------
+split2 <- function(x, split=",", cols=c("lat_yy", "long_xx") ) { 
+    v <- splitl(x, split=split); 
+    v <- data.frame(v1=v[1], v2=v[2]); 
+    names(v) <- cols;
+    return(v);
+}
+
+#------------------------------------------------
+rbind_list <- function(ldf) {
+  tdf <- NULL;
+  for(tk in ldf) tdf <- rbind(tdf, tk); 
+  return(tdf);
 }
 
 
