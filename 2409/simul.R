@@ -1,6 +1,19 @@
 library(ggplot2);
 library(gridExtra);
 
+#------------------------------------------------
+rdiff <- function(N=1) {
+    runif(N) - runif(N);
+}
+
+#------------------------------------------------
+rturn <- function(x, y, dt) { 
+  xk <- x*cos(dt) - y*sin(dt);
+  yk <- y*cos(dt) + x*sin(dt);
+  return( c(x=xk, y=yk) );
+}
+
+
 
 #------------------------------------------------
 rdupl <- function(rows, gdf, sel, cdf=FALSE, inv=0) {
