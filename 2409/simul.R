@@ -7,6 +7,13 @@ rdiff <- function(N=1) {
 }
 
 #------------------------------------------------
+rbell <- function(N=1) {
+    sqrt(-2 * log(runif(N)) + 0) * cos( 2*pi*runif(N) + 0)
+}
+
+
+
+#------------------------------------------------
 rturn <- function(x, y, dt) { 
   xk <- x*cos(dt) - y*sin(dt);
   yk <- y*cos(dt) + x*sin(dt);
