@@ -11,6 +11,12 @@ rbell <- function(N=1) {
     sqrt(-2 * log(runif(N)) + 0) * cos( 2*pi*runif(N) + 0)
 }
 
+#------------------------------------------------
+rturn2 <- function(x0, y0, x1, y1, dt) {
+  x2 <- x0 + (x1-x0)*cos(dt) - (y1-y0)*sin(dt);
+  y2 <- y0 + (y1-y0)*cos(dt) + (x1-x0)*sin(dt);
+  return(c(x2, y2));
+}
 
 
 #------------------------------------------------
