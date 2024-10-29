@@ -33,7 +33,7 @@ ggplot_gantt <- function(gdf) {
     g <- g + geom_text(aes(x=end, y=code, label='', fill=code), show.legend=FALSE);
 
     g <- g + geom_segment(aes(x=start, y=code, xend=end, yend=code, color=code), size=3.5, show.legend=FALSE);
-    g <- g + geom_segment(data=gdf_wale, aes(x=wale, y=code, xend=end, yend=code), size=1.5, show.legend=FALSE);
+    g <- g + geom_segment(data=gdf_wale, aes(x=start, y=code, xend=end, yend=code), size=1.5, show.legend=FALSE);
 
     g <- g + geom_segment(data=gdf_vert, aes(x=wale, xend=wale, y=ymin, yend=ymax), linetype="dashed", color="blue", line=1.5, show.legend=FALSE);
     return(g);
