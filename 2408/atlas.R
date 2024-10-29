@@ -26,6 +26,7 @@ ggtitle_wale <- function(gdf, hi="wh", low="wl") {
 ggplot_gantt <- function(gdf) {
     gdf_vert <- data.frame(wale=max(gdf$wale), ymin=min(gdf$code), ymax=max(gdf$code));
     gdf_wale <- gdf[gdf$end>gdf$wale, ];
+    gdf_wale$start <- ifelse(gdf_wale$start>gdf_wale$wale, gdf_wale$start, gdf_wale$wale);
 
     g <- ggplot(gdf) + no_axis_titles() + theme( axis.text.x = element_blank(), axis.ticks.x = element_blank() );
     g <- g + geom_text(aes(x=start, y=code, label='', fill=code), show.legend=FALSE);
