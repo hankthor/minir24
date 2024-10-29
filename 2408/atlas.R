@@ -21,7 +21,6 @@ ggtitle_wale <- function(gdf, hi="wh", low="wl") {
     return( ggtitle(wtt) );
 }
 
-
 #-----------------------------------------------
 ggplot_gantt <- function(gdf) {
     gdf_vert <- data.frame(wale=max(gdf$wale), ymin=min(gdf$code), ymax=max(gdf$code));
@@ -38,6 +37,7 @@ ggplot_gantt <- function(gdf) {
     g <- g + geom_segment(data=gdf_vert, aes(x=wale, xend=wale, y=ymin, yend=ymax), linetype="dashed", color="blue", line=1.5, show.legend=FALSE);
     return(g);
 }
+
 
 #-----------------------------------------------
 TDS_WF <- 670; TDS_HF <- 586; TDS_TITLE <- "PANEL1";
