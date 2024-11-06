@@ -51,7 +51,3 @@ ggplot_water <- function(gdf=dataset, fmt_cy = fmt_c1_e3, map_labels=NULL, map_c
     g <- g + theme(axis.title.x = element_blank(), axis.title.y = element_blank());
     print(g);
 }
-
-#-----------------------------------------------
-#ggplot_water(show_bar=FALSE);
-
