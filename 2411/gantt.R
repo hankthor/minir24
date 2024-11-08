@@ -3,6 +3,7 @@
 #-----------------------------------------------
 library(ggplot2); library(gridExtra);
 
+
 #-----------------------------------------------
 ggplot_gantt_inner <- function(gdf, subset_type="free", subset_ncol=1, gantt_size=3.5, wale_size=1, wale_col='black', div_type="dashed", div_col="blue") {
     g <- ggplot(gdf);
@@ -27,6 +28,9 @@ ggplot_gantt_inner <- function(gdf, subset_type="free", subset_ncol=1, gantt_siz
 #-----------------------------------------------
 ggplot_gantt <- function(gdf=dataset, ncol=2, inner=ggplot_gantt_inner, mode="") {
     names(gdf) <- sapply(names(gdf), FUN=function(x) { gsub("\\s+", "_", x) })
+    gdf$rent_start <- left_seq(gdf$rent_start, 10);
+    gdf$rent_end <- left_seq(gdf$rent_end, 10);
+    gdf$WALE_date <- left_seq(gdf$WALE_date, 10);
 
     g <- lapply(split(gdf, gdf$store), FUN=inner);
     g <- ggplot() + annotation_custom(arrangeGrob(grobs=g, ncol=ncol));
@@ -37,5 +41,10 @@ ggplot_gantt <- function(gdf=dataset, ncol=2, inner=ggplot_gantt_inner, mode="")
     print(g);
 }
 
+left_seq <- function(x, n) {
+    for(k in seq_along(x)) { x[k] <- substr(x[k], 1, n); }
+    return(x);
+}
+
 #-----------------------------------------------
-#ggplot_gantt();
+#ggplot_gantt(ncol=1);
