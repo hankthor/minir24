@@ -19,8 +19,8 @@ ggplot_gantt_inner <- function(gdf, subset_type="free", subset_ncol=1, gantt_siz
     g <- g + geom_vline(aes(xintercept=WALE_date), linetype=div_type, color=div_col, show.legend=FALSE);
     g <- g + geom_segment(data=gdf_WALE, aes(x=WALE_start, xend=rent_end, y=rent_code, yend=rent_code), color=wale_col, size=wale_size, show.legend=FALSE);
 
-    g <- g + theme(axis.title.x = element_blank(), axis.title.y = element_blank() );
-    g <- g + theme(axis.text.x = element_blank(), axis.text.y = element_blank() );
+    g <- g + theme(axis.title.x = element_blank(), axis.title.y = element_blank(), axis.ticks.x = element_blank() );
+    g <- g + theme(axis.text.x = element_blank(), axis.text.y = element_blank(), axis.ticks.y = element_blank()  );
     
     return(g);
 }
@@ -41,6 +41,7 @@ ggplot_gantt <- function(gdf=dataset, ncol=2, inner=ggplot_gantt_inner, mode="")
     print(g);
 }
 
+#-----------------------------------------------
 left_seq <- function(x, n) {
     for(k in seq_along(x)) { x[k] <- substr(x[k], 1, n); }
     return(x);
