@@ -1,18 +1,18 @@
 
-//>>>>>>> Message me at https://www.linkedin.com/in/hankthor/ for professional support on financial due diligence, geospatial analytics, social media analytics, unstructured data analytics.
+// Message me at https://www.linkedin.com/in/hankthor/ for professional support on financial due diligence, geospatial analytics, social media analytics, unstructured data analytics.
 
-//The nested style
+// The nested style
 b1_nested = SELECTCOLUMNS(GENERATESERIES(1, 24), "amt", rand()*123, "time_ym", format(EDATE(date(2024, 9, 1), -[Value]), "MMMyy") )
 
   
-//The step-var-return style
+// The step-var-return style
 b2_step = 
 var step1 = GENERATESERIES(1, 24)
 var step2 = SELECTCOLUMNS(step1, "amt", rand()*123, "time_ym", format(EDATE(date(2024, 9, 1), -[Value]), "MMMyy") )
 return step1
 
 
-//The part-union style
+// The part-union style
 b3_part = 
 var part1 = (
 var step1 = GENERATESERIES(1, 24)
