@@ -1,0 +1,26 @@
+
+//The nested style
+b1_nested = SELECTCOLUMNS(GENERATESERIES(1, 24), "amt", rand()*123, "time_ym", format(EDATE(date(2024, 9, 1), -[Value]), "MMMyy") )
+
+  
+//The step-var-return style
+b2_step = 
+var step1 = GENERATESERIES(1, 24)
+var step2 = SELECTCOLUMNS(step1, "amt", rand()*123, "time_ym", format(EDATE(date(2024, 9, 1), -[Value]), "MMMyy") )
+return step1
+
+
+//The part-union style
+b3_part = 
+var part1 = (
+var step1 = GENERATESERIES(1, 24)
+var step2 = SELECTCOLUMNS(step1, "amt", rand()*123, "time_ym", format(EDATE(date(2024, 9, 1), -[Value]), "MMMyy"), "store", "north")
+return step2)
+
+var part2 = (
+var step1 = GENERATESERIES(1, 24)
+var step2 = SELECTCOLUMNS(step1, "amt", rand()*123, "time_ym", format(EDATE(date(2024, 9, 1), -[Value]), "MMMyy"), "store", "south")
+return step2)
+
+return UNION(part1, part2)
+
