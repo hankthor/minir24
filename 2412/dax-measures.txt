@@ -1,0 +1,9 @@
+
+// Message me at https://www.linkedin.com/in/hankthor/ for professional support on financial due diligence, geospatial analytics, social media analytics, unstructured data analytics.
+
+__order_count = COUNTAX(GROUPBY(b1_orders, [POS code]), [POS code])
+
+__revenue_e3 = sumx(b1_orders, [POS amt])/1e3
+
+  
+  
