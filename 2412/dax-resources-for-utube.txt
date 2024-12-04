@@ -1,0 +1,62 @@
+
+// Message me at https://www.linkedin.com/in/hankthor/ for professional support on financial due diligence, geospatial analytics, social media analytics, unstructured data analytics.
+
+#-------------------------------------- Boxing functions
+b2_boxing = 
+var set1 = SELECTCOLUMNS(b1_orders, "val", [POS amt])
+var v1 = MINX(set1, [val])
+var v2 = maxx(set1, [val])
+var v3 = averagex(set1, [val])
+var v4 = MEDIANX(set1, [val])
+
+var v5 = MEDIANX(filter(set1, [val]<=v4), [val])
+var v6 = MEDIANX(filter(set1, [val]>v4), [val])
+var v7 = COUNTROWS(set1)
+
+RETURN row("min", v1, "max", v2, "avg", v3, "med", v4, "med25", v5, "med75", v6, "rows", v7) 
+
+#-------------------------------------- Boxing functions over subsets
+b3_boxing_local = 
+
+var base1 = ADDCOLUMNS(b1_orders, "group", [cust seg])
+
+var base2 = GENERATEALL(GROUPBY(base1, [group]), var g1 = [group]
+    var set1 = SELECTCOLUMNS(filter(base1, [group]=g1), "val", [POS amt])
+    var v1 = MINX(set1, [val])
+    var v2 = maxx(set1, [val])
+    var v3 = averagex(set1, [val])
+    var v4 = MEDIANX(set1, [val])
+
+    var v5 = MEDIANX(filter(set1, [val]<=v4), [val])
+    var v6 = MEDIANX(filter(set1, [val]>v4), [val])
+    var v7 = COUNTROWS(set1)
+
+    RETURN row("min", v1, "max", v2, "avg", v3, "med", v4, "med25", v5, "med75", v6, "rows", v7) )
+
+return base2  
+
+#-------------------------------------- Boxing functions with DAX measure
+  __boxing = 
+var set1 = SELECTCOLUMNS(b1_orders, "val", [POS amt])
+var v1 = MINX(set1, [val])
+var v2 = maxx(set1, [val])
+var v3 = averagex(set1, [val])
+var v4 = MEDIANX(set1, [val])
+
+var v5 = MEDIANX(filter(set1, [val]<=v4), [val])
+var v6 = MEDIANX(filter(set1, [val]>v4), [val])
+var v7 = COUNTROWS(set1)
+
+var t1 = "min=" & v1 & " max=" & v2 & " avg=" & format(v3, "#,0.0") & " med=" & v4 & " med25=" & v5 & " med75=" & v6 & " rows=" & format(v7, "#,0") 
+return t1
+
+#-------------------------------------- Boxing functions with ggplot
+library(ggplot2); 
+library(gridExtra);
+
+gA <- ggplot(dataset) + geom_boxplot(aes(x=`cust seg`, y=`POS amt`, fill=`cust seg`), show.legend=FALSE);
+gB <- ggplot(dataset) + geom_violin(aes(x=`cust seg`, y=`POS amt`, fill=`cust seg`), show.legend=FALSE);
+
+grid.arrange(grobs=list(gA, gB), ncol=1);
+
+  
